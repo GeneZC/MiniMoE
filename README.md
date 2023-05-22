@@ -13,15 +13,16 @@ This repository contains code for ACL 2023 paper titled [Lifting the Curse of Ca
   - [Overview](#overview)
   - [Getting Started](#getting-started)
     - [Requirements](#requirements)
-    - [GLUE Data](#glue-data)
-    - [CoNLL Data](#conll-data)
-    - [Training & Evaluation](#training&evaluation)
+    - [Distillation](#distillation)
+    - [Finetuning](#finetuning)
   - [Bugs or Questions?](#bugs-or-questions)
   - [Citation](#citation)
 
 ## Overview
 
-Pretrained language models (LMs) have shown compelling performance on various downstream tasks, but unfortunately they require a tremendous amount of inference compute. Knowledge distillation finds a path to compress LMs to small ones with a teacher-student paradigm. However, when the capacity gap between the teacher and the student is large, a curse of capacity gap appears, invoking a deficiency in distilling LMs. While a few studies have been carried out to fill the gap, the curse is not yet well tackled. In this paper, we aim at lifting the curse of capacity gap via enlarging the capacity of the student without notably increasing the inference compute. Largely motivated by sparse activation regime of mixture of experts (\textsc{MoE}), we propose a mixture of minimal experts (\textsc{MiniMoE}), which imposes extra parameters to the student but introduces almost no additional inference compute. Experimental results on GLUE and CoNLL demonstrate the curse of capacity gap is lifted by the magic of \textsc{MiniMoE} to a large extent. \textsc{MiniMoE} also achieves the state-of-the-art performance at small FLOPs compared with a range of competitive baselines. With a compression rate as much as $\sim$50$\times$, \textsc{MiniMoE} preserves $\sim$95\% GLUE score of the teacher.
+Pretrained language models (LMs) have shown compelling performance on various downstream tasks, but unfortunately they require a tremendous amount of inference compute. Knowledge distillation finds a path to compress LMs to small ones with a teacher-student paradigm. However, when the capacity gap between the teacher and the student is large, a curse of capacity gap appears, invoking a deficiency in distilling LMs. While a few studies have been carried out to fill the gap, the curse is not yet well tackled. In this paper, we aim at lifting the curse of capacity gap via enlarging the capacity of the student without notably increasing the inference compute. Largely motivated by sparse activation regime of mixture of experts (MoE), we propose a mixture of minimal experts (MiniMoE), which imposes extra parameters to the student but introduces almost no additional inference compute. Experimental results on GLUE and CoNLL demonstrate the curse of capacity gap is lifted by the magic of MiniMoE to a large extent. MiniMoE also achieves the state-of-the-art performance at small FLOPs compared with a range of competitive baselines. With a compression rate as much as $\sim$50$\times$, \textsc{MiniMoE} preserves $\sim$95\% GLUE score of the teacher.
+
+<img src="./assets/minimoe_motivation.png" alt="minimoe" align=center/>
 
 ## Getting Started
 
@@ -31,6 +32,15 @@ Pretrained language models (LMs) have shown compelling performance on various do
 - Numpy
 - Transformers
 
+### Distillation
+
+**Wikipedia Data**
+
+### Finetuning
+
+**GLUE & CoNLL Data**
+
+<!--
 ### GLUE Data
 
 Get GLUE data through the [link](https://github.com/nyu-mll/jiant/blob/master/scripts/download_glue_data.py) and put it to the corresponding directory. For example, MRPC dataset should be placed into `datasets/mrpc`.
@@ -39,7 +49,7 @@ Get GLUE data through the [link](https://github.com/nyu-mll/jiant/blob/master/sc
 
 ### Training & Evaluation
 
-<!--
+
 The training and evaluation are achieved in several scripts. We provide example scripts as follows.
 
 **Finetuning**
