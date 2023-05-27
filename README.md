@@ -36,53 +36,34 @@ Pretrained language models (LMs) have shown compelling performance on various do
 
 **Wikipedia Data**
 
-Download Wkipedia dump through the [link](https://dumps.wikimedia.org/enwiki/latest/enwiki-latest-pages-articles.xml.bz2). Process the dump with [wikiextractor](https://github.com/attardi/wikiextractor), which will format the dump into this [format](https://github.com/attardi/wikiextractor/wiki/File-Format).
+Download Wikipedia dump through the [link](https://dumps.wikimedia.org/enwiki/latest/enwiki-latest-pages-articles.xml.bz2). Process the dump with [wikiextractor](https://github.com/attardi/wikiextractor), which will convert the dump into this [format](https://github.com/attardi/wikiextractor/wiki/File-Format).
 
-Format
+Format the processed Wikipedia to the format that aligns with the style of BERT pretraining, i.e., one sentence per line in one document, and one empty line between two documents. We provide example scripts of formatting the Wikipedia in `scripts/bert_format_wiki.sh`. We explain some importance arguments in the following:
+* `--input_dir`: directory to input files.
+* `--input_regex`: regex to enumerate input files in above `input_dir`.
+* `--output_dir`: directory to save formatted files.
+* `--num_processors`: num of precessors to conduct multiprocessing.
 
-Build
+Build the formatted Wikipedia with TFRecord so that we could later read the data in a stream-like manner. This could help to save much cpu memory when we are faced with huge volume of data. We provide example scripts of building the Wikipedia in `scripts/bert_build_wiki.sh`. We explain some importance arguments in the following:
+* `--input_dir`: same as above.
+* `--input_regex`: same as above.
+* `--output_dir`: same as above.
+* `--tokenizer_name_or_path`: name or path to the tokenizer, used to tokenize the sentences.
+* `--do_lower_case`: whether the sentences should be lower cased or not.
+* `--max_seq_length`: the maximum sequenth length of the input, used to truncate the input if necessary.
+* `--num_processors`: same as above.
 
 **Distillation**
+
+Distil with MiniLM.
+
+Distil with MiniLM w/ TA.
+
+Distil with MiniMoE.
 
 ### Finetuning
 
-**GLUE & CoNLL Data**
-
-Download GLUE data through the [link](https://github.com/nyu-mll/jiant/blob/master/scripts/download_glue_data.py), and CoNLL data through another [link](https://www.clips.uantwerpen.be/conll2003/ner/) in exact CoNLL format. Put them to the corresponding directories. For example, MRPC dataset should be placed into `datasets/mrpc`.
-
-**Finetuning**
-
-
-
-<!--
-
-### Training & Evaluation
-
-
-The training and evaluation are achieved in several scripts. We provide example scripts as follows.
-
-**Finetuning**
-
-We provide an example of finetuning `bert-base-uncased` on RTE in `scripts/run_finetuning_rte.sh`. We explain some important arguments in following:
-* `--model_type`: Variant to use, should be `ft` in the case.
-* `--model_path`: Pretrained language models to start with, should be `bert-base-uncased` in the case and can be others as you like.
-* `--task_name`: Task to use, should be chosen from `rte`, `mrpc`, `stsb`, `sst2`, `qnli`, `qqp`, `mnli`, and `mnlimm`.
-* `--data_type`: Input format to use, default to `combined`.
-
-**Pruning**
-
-We provide and example of pruning a finetuned checkpoint on RTE in `scripts/run_pruning_rte.sh`. The arguments should be self-contained.
-
-**Distillation**
-
-We provide an example of distilling a finetuned teacher to a layer-dropped or parameter-pruned student on RTE in `scripts/run_distillation_rte.sh`. We explain some important arguments in following:
-* `--model_type`: Variant to use, should be `kd` in the case.
-* `--teacher_model_path`: Teacher models to use, should be the path to the finetuned teacher checkpoint.
-* `--student_model_path`: Student models to initialize, should be the path to the pruned/finetuned teacher checkpoint depending on the way you would like to initialize the student.
-* `--student_sparsity`: Student sparsity, should be set if you would like to use parameter-pruned student, e.g., 70. Otherwise, this argument should be left blank.
-* `--student_layer`: Student layer, should be set if you would like to use layer-dropped student, e.g., 4.
-
-! -->
+Please refer to our previous work [StarK](https://github.com/GeneZC/StarK/blob/main/run_finetuning.py) and [MiniDisc](https://github.com/GeneZC/MiniDisc/blob/main/run_distillation_ner.py) for finetuning on GLUE and CoNLL, respectively.
 
 ## Bugs or Questions?
 
