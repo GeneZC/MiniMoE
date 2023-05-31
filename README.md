@@ -163,7 +163,7 @@ If you have any questions related to the code or the paper, feel free to email C
 Please cite our paper if you use the code in your work:
 
 ```bibtex
-@inproceedings{zhang2022minimoe,
+@inproceedings{zhang2023minimoe,
    title={Lifting the Curse of Capacity Gap in Distilling Language Models},
    author={Zhang, Chen and Yang, Yang and Liu, Jiahao and Wang, Jingang and Xian, Yunsen and Wang, Benyou and Song, Dawei},
    booktitle={ACL},
