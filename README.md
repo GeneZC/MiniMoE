@@ -88,7 +88,7 @@ The checkpoints from `bert-base-uncased`, `bert-large-uncased`, and `bert-base-c
 We provide example scripts of distillation with MiniLM w/ TA in `scripts/bert_minilm_12,3L_384H.sh`. The arguments are roughly the same as those in MiniLM. We further explain some additional arguments in the following:
 * `--iteration`: current step of distillation, e.g., `iteration=1` when the teacher `bert-base-uncased` is distilled to the TA `bert_minilm_12L_384H`, and `iteration=2` when the TA is later distilled to the student `bert_minilm_3L_384H`.
 
-:warning: Two rounds of distillation are needed to insert a TA between the teacher and the student. Be careful when setting `teacher_model_name_or_path` and `teacher_model_name_or_path`.
+:warning: Two rounds of distillation are needed to insert a TA between the teacher and the student. Be careful when setting `teacher_model_name_or_path` and `student_model_name_or_path`.
 
 **MiniMoE**
 
@@ -107,7 +107,7 @@ The checkpoints from `bert-base-uncased` and `bert-large-uncased` are offered as
 
 **Sparse MiniLM**
 
-:ghost: The method is primarily implemented for our previous work [MiniDisc](https://github.com/GeneZC/MiniDisc), which uncovers the optimal teacher in minimally one trial against many trials from other studies. For sparse MiniLM, we need to sparsify the teacher first so that it could be used to initialize the student. The sparsification of attention heads and feedforward neurons is borrowed from [16Heads](https://arxiv.org/abs/1905.10650), [DynaBERT](https://arxiv.org/abs/2004.04037) and that of hidden states is borrowed from [CoFiPruning](https://arxiv.org/abs/2204.00408). The schedule of the sparsification among heads, neurons, and hiddens for a given sparsity is raise by us. The sparsification is carried out on a fraction of Wikipedia and parameter importance scores are estimated via the masked language modeling loss. With all designs above, we could reach a model as sparse as 99% sparsity yet with just fine performance. Please refer to the code for details.
+:ghost: The method is primarily implemented for our previous work [MiniDisc](https://github.com/GeneZC/MiniDisc), which uncovers the optimal TA in minimally one trial against many trials from other studies. For sparse MiniLM, we need to sparsify the teacher first so that it could be used to initialize the student. The sparsification of attention heads and feedforward neurons is borrowed from [16Heads](https://arxiv.org/abs/1905.10650), [DynaBERT](https://arxiv.org/abs/2004.04037) and that of hidden states is borrowed from [CoFiPruning](https://arxiv.org/abs/2204.00408). The schedule of the sparsification among heads, neurons, and hiddens for a given sparsity is raise by us. The sparsification is carried out on a fraction of Wikipedia and parameter importance scores are estimated via the masked language modeling loss. With all designs above, we could reach a model as sparse as 99% sparsity yet with just fine performance. Please refer to `run_sparsification_bert.py` for details.
 
 We provide example scripts of sparsification of BERT in `scripts/bert_sparse.sh`. We explain some importance arguments in the following:
 * `--model_type`: model variant to use, should be `sparsebert_mlm` here.
