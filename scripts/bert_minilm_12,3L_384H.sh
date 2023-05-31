@@ -1,0 +1,48 @@
+
+python -m torch.distributed.launch --nproc_per_node=8 --master_port 37776 run_distillation_bert.py \
+        --model_type bert_minilm \
+        --teacher_model_name_or_path bert_base_uncased \
+        --student_model_name_or_path bert_base_uncased \
+        --record_path_or_regex "path/to/builded/wikipedia_bert_128/wiki_*.format.tfrecord" \
+        --data_type bert_nil \
+        --output_dir path/to/outputs \
+        --max_length 128 \
+        --per_device_train_batch_size 128 \
+        --per_device_eval_batch_size 128 \
+        --learning_rate 3e-4 \
+        --weight_decay 1e-2 \
+        --log_interval 1000 \
+        --num_train_epochs 5 \
+        --warmup_proportion 0.01 \
+        --max_grad_norm 5.0 \
+        --seed 776 \
+        --use_fp16 \
+        --num_relation_heads 32 \
+        --iteration 1 \
+        --layer 12 \
+        --hidden 384 \
+        --model_suffix 12L_384H
+
+python -m torch.distributed.launch --nproc_per_node=8 --master_port 37776 run_distillation.py \
+        --model_type bert_minilm \
+        --teacher_model_name_or_path path/to/bert_minilm_12L_384H \
+        --student_model_name_or_path path/to/bert_minilm_12L_384H \
+        --record_path_or_regex "path/to/builded/wikipedia_bert_128/wiki_*.format.tfrecord" \
+        --data_type bert_nil \
+        --output_dir path/to/outputs \
+        --max_length 128 \
+        --per_device_train_batch_size 128 \
+        --per_device_eval_batch_size 128 \
+        --learning_rate 3e-4 \
+        --weight_decay 1e-2 \
+        --log_interval 1000 \
+        --num_train_epochs 5 \
+        --warmup_proportion 0.01 \
+        --max_grad_norm 5.0 \
+        --seed 776 \
+        --use_fp16 \
+        --num_relation_heads 32 \
+        --iteration 2 \
+        --layer 3 \
+        --hidden 384 \
+        --model_suffix 12,3L_384H
