@@ -140,7 +140,7 @@ def main():
         loss.backward()
         head_importance += head_mask.grad.abs().detach() / len(dev_loader)
         neuron_importance += neuron_mask.grad.abs().detach() / len(dev_loader)
-        hidden_importance + hidden_mask.grad.abs().detach() / len(dev_loader)
+        hidden_importance += hidden_mask.grad.abs().detach() / len(dev_loader)
         # Clear the gradients in case of potential overflow.
         head_mask.grad = None
         neuron_mask.grad = None
